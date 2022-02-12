@@ -11,4 +11,5 @@ public interface PlantDAO {
 	public List<PlantDTO> getUserPlants(long id);
 	void addUserPlant(long userId, long plantId);
 	void addNewPlant(PlantDTO plant);
+	void updatePlant(PlantDTO plant);
 }

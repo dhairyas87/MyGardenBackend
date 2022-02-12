@@ -83,6 +83,21 @@ public class PlantDAOImpl implements PlantDAO {
 		}
 
 	}
+	
+	@Override
+	public void updatePlant(PlantDTO plant) {
+		// TODO Auto-generated method stub
+		try {
+			int insertedRowCount = jdbcTemplate.update("UPDATE PLANTS SET NAME =?,IMAGE=?,DESCRIPTION =? WHERE PLANTS.ID = ?",
+					plant.getName(),plant.getImage(),plant.getDescription(),plant.getId());
+
+		} catch (DataAccessException e) {
+			LOGGER.info("Error while adding a plant to all Plant List {}.Exception Details are: {}", plant.getId(),
+					e.getMessage());
+
+		}
+		
+	}
 
 
 	static final class PlalntDTORowMapper implements RowMapper<PlantDTO> {
@@ -98,6 +113,9 @@ public class PlantDAOImpl implements PlantDAO {
 			return plantDTO;
 		}
 	}
+
+
+	
 
 	
 }

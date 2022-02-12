@@ -29,4 +29,9 @@ public class PlantService {
 	public void addNewPlant(PlantDTO plant) {
 		plantDao.addNewPlant(plant);
 	}
+	
+	public void updatePlant(PlantDTO plant) {
+		plantDao.updatePlant(plant);
+	}
+	
 }
