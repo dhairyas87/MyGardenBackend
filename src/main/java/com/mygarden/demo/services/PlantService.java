@@ -23,5 +23,10 @@ public class PlantService {
 		List<PlantDTO> plantDTOList = plantDao.getUserPlants(id);
 		return plantDTOList;
 	}
-	
+	public void addUserPlant(long userId, long plantId) {
+		plantDao.addUserPlant(userId, plantId);
+	}
+	public void addNewPlant(PlantDTO plant) {
+		plantDao.addNewPlant(plant);
+	}
 }

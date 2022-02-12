@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,5 +37,19 @@ public class PlantsController {
 		List<PlantDTO> plants = plantService.getUserPlants(id);
 
 		return new ResponseEntity<List<PlantDTO>>(plants, HttpStatus.OK);
+	}
+
+	@PostMapping("/addUserPlant/{userId}/{plantId}")
+	public ResponseEntity addUserPlant(@PathVariable Long userId, @PathVariable Long plantId) {
+		plantService.addUserPlant(userId, plantId);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@PostMapping("/addNewPlant")
+	public ResponseEntity addNewPlant(@RequestBody PlantDTO plantDto) {
+		plantService.addNewPlant(plantDto);
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

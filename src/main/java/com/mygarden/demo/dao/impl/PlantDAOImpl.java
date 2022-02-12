@@ -8,6 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -41,7 +42,9 @@ public class PlantDAOImpl implements PlantDAO {
 	public List<PlantDTO> getUserPlants(long id) {
 		try {
 
-			return jdbcTemplate.query("SELECT * FROM PLANTS P INNER JOIN PLANTS_USERS PU ON P.ID = PU.PLANT_ID WHERE PU.USER_ID = ? ",new PlalntDTORowMapper(), new Object[] {id});
+			return jdbcTemplate.query(
+					"SELECT * FROM PLANTS P INNER JOIN PLANTS_USERS PU ON P.ID = PU.PLANT_ID WHERE PU.USER_ID = ? ",
+					new PlalntDTORowMapper(), new Object[] { id });
 		} catch (EmptyResultDataAccessException e) {
 			LOGGER.info(
 					"EmptyResultDataAccessException thrown while retrieving all Plants. Exception Details are : {} ",
@@ -50,6 +53,37 @@ public class PlantDAOImpl implements PlantDAO {
 		return Collections.emptyList();
 
 	}
+
+	@Override
+	public void addUserPlant(long userId, long plantId) {
+
+		try {
+			int insertedRowCount = jdbcTemplate.update("INSERT INTO PLANTS_USERS (USER_ID,PLANT_ID) VALUES (?,?)",
+					userId, plantId);
+
+		} catch (DataAccessException e) {
+			LOGGER.info("Error while adding a plnat for the user with Id {}.Exception Details are: {}", userId,
+					e.getMessage());
+
+		}
+
+	}
+	
+	@Override
+	public void addNewPlant(PlantDTO plant) {
+		// TODO Auto-generated method stub
+		try {
+			int insertedRowCount = jdbcTemplate.update("INSERT INTO PLANTS (NAME,IMAGE,DESCRIPTION) VALUES (?,?,?)",
+					plant.getName(),plant.getImage(),plant.getDescription());
+
+		} catch (DataAccessException e) {
+			LOGGER.info("Error while adding a plant to all Plant List {}.Exception Details are: {}", plant.getId(),
+					e.getMessage());
+
+		}
+
+	}
+
 
 	static final class PlalntDTORowMapper implements RowMapper<PlantDTO> {
 
@@ -65,4 +99,5 @@ public class PlantDAOImpl implements PlantDAO {
 		}
 	}
 
+	
 }
