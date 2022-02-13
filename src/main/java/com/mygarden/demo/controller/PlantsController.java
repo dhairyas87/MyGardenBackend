@@ -43,21 +43,37 @@ public class PlantsController {
 	@PostMapping("/addUserPlant/{userId}/{plantId}")
 	public ResponseEntity addUserPlant(@PathVariable Long userId, @PathVariable Long plantId) {
 		plantService.addUserPlant(userId, plantId);
-
-		return new ResponseEntity<>(HttpStatus.OK);
+		if (plantService.addUserPlant(userId, plantId) != 0) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@PostMapping("/addNewPlant")
 	public ResponseEntity addNewPlant(@RequestBody PlantDTO plantDto) {
-		plantService.addNewPlant(plantDto);
-
-		return new ResponseEntity<>(HttpStatus.OK);
+		if (plantService.addNewPlant(plantDto) != 0) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			/*
+			 * Ideally this block should throw Internal Server Error with Proper Exception
+			 * but due to time constraint 
+			 * 
+			 */
+			
+			 
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
-	
+
 	@PutMapping("/updatePlant")
 	public ResponseEntity updatePlant(@RequestBody PlantDTO plantDto) {
-		plantService.updatePlant(plantDto);
+		if (plantService.updatePlant(plantDto) != 0) {
 
-		return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

@@ -55,25 +55,27 @@ public class PlantDAOImpl implements PlantDAO {
 	}
 
 	@Override
-	public void addUserPlant(long userId, long plantId) {
-
+	public int addUserPlant(long userId, long plantId) {
+		int insertedRowCount =0;
 		try {
-			int insertedRowCount = jdbcTemplate.update("INSERT INTO PLANTS_USERS (USER_ID,PLANT_ID) VALUES (?,?)",
+			 insertedRowCount = jdbcTemplate.update("INSERT INTO PLANTS_USERS (USER_ID,PLANT_ID) VALUES (?,?)",
 					userId, plantId);
 
 		} catch (DataAccessException e) {
 			LOGGER.info("Error while adding a plnat for the user with Id {}.Exception Details are: {}", userId,
 					e.getMessage());
+			
 
 		}
-
+		return insertedRowCount;
 	}
 	
 	@Override
-	public void addNewPlant(PlantDTO plant) {
+	public int addNewPlant(PlantDTO plant) {
 		// TODO Auto-generated method stub
+		int insertedRowCount =0;
 		try {
-			int insertedRowCount = jdbcTemplate.update("INSERT INTO PLANTS (NAME,IMAGE,DESCRIPTION) VALUES (?,?,?)",
+			 insertedRowCount = jdbcTemplate.update("INSERT INTO PLANTS (NAME,IMAGE,DESCRIPTION) VALUES (?,?,?)",
 					plant.getName(),plant.getImage(),plant.getDescription());
 
 		} catch (DataAccessException e) {
@@ -81,14 +83,17 @@ public class PlantDAOImpl implements PlantDAO {
 					e.getMessage());
 
 		}
+		return insertedRowCount;
 
 	}
 	
 	@Override
-	public void updatePlant(PlantDTO plant) {
+	public int updatePlant(PlantDTO plant) {
 		// TODO Auto-generated method stub
+		
+		int insertedRowCount =0;
 		try {
-			int insertedRowCount = jdbcTemplate.update("UPDATE PLANTS SET NAME =?,IMAGE=?,DESCRIPTION =? WHERE PLANTS.ID = ?",
+			 insertedRowCount = jdbcTemplate.update("UPDATE PLANTS SET NAME =?,IMAGE=?,DESCRIPTION =? WHERE PLANTS.ID = ?",
 					plant.getName(),plant.getImage(),plant.getDescription(),plant.getId());
 
 		} catch (DataAccessException e) {
@@ -96,6 +101,7 @@ public class PlantDAOImpl implements PlantDAO {
 					e.getMessage());
 
 		}
+		return insertedRowCount;
 		
 	}
 

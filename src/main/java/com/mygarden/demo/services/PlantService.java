@@ -23,15 +23,15 @@ public class PlantService {
 		List<PlantDTO> plantDTOList = plantDao.getUserPlants(id);
 		return plantDTOList;
 	}
-	public void addUserPlant(long userId, long plantId) {
-		plantDao.addUserPlant(userId, plantId);
+	public int  addUserPlant(long userId, long plantId) {
+	return plantDao.addUserPlant(userId, plantId);
 	}
-	public void addNewPlant(PlantDTO plant) {
-		plantDao.addNewPlant(plant);
+	public int addNewPlant(PlantDTO plant) {
+		return plantDao.addNewPlant(plant);
 	}
 	
-	public void updatePlant(PlantDTO plant) {
-		plantDao.updatePlant(plant);
+	public int updatePlant(PlantDTO plant) {
+		return plantDao.updatePlant(plant);
 	}
 	
 }

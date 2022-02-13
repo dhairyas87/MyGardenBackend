@@ -9,7 +9,7 @@ import com.mygarden.demo.DTO.PlantDTO;
 public interface PlantDAO {
 	public List<PlantDTO> getAllPlants();
 	public List<PlantDTO> getUserPlants(long id);
-	void addUserPlant(long userId, long plantId);
-	void addNewPlant(PlantDTO plant);
-	void updatePlant(PlantDTO plant);
+	int addUserPlant(long userId, long plantId);
+	int addNewPlant(PlantDTO plant);
+	int updatePlant(PlantDTO plant);
 }
